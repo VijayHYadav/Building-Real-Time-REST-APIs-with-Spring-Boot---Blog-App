@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.springboot.blog.entity.Post;
+import com.springboot.blog.exception.ResourceNotFoundException;
 import com.springboot.blog.payload.PostDto;
 import com.springboot.blog.repository.PostRepository;
 import com.springboot.blog.service.PostService;
@@ -37,6 +38,32 @@ public class PostServiceImpl implements PostService {
 		return posts.stream().map(post -> mapToDto(post)).collect(Collectors.toList());
 	}
 
+	@Override
+	public PostDto getPostById(long id) {
+		Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+		return mapToDto(post);
+	}
+
+	@Override
+	public PostDto updatePost(PostDto postDto, long id) {
+		// get post by id from the database
+		Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+		post.setTitle(postDto.getTitle());
+		post.setDescription(postDto.getDescription());
+		post.setContent(postDto.getContent());
+
+		Post updatedPost = postRepository.save(post);
+
+		return mapToDto(updatedPost);
+	}
+
+	@Override
+	public void deletePostById(long id) {
+		// get post by id from the database
+		Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+		postRepository.delete(post);
+	}
+
 	// convert Entity into DTO
 	private PostDto mapToDto(Post post) {
 		PostDto postDto = new PostDto();
@@ -57,6 +84,7 @@ public class PostServiceImpl implements PostService {
 
 		return post;
 	}
+
 }
 
 //note: spring v4.3 onwards whenever we configure our class as spring been and that 
