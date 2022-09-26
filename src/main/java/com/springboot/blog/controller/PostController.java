@@ -1,7 +1,5 @@
 package com.springboot.blog.controller;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.blog.payload.PostDto;
+import com.springboot.blog.payload.PostResponse;
 import com.springboot.blog.service.PostService;
 
 @RestController
@@ -36,7 +35,7 @@ public class PostController {
 
 	// get all posts rest api http://localhost:8080/api/posts?pageNo=0&pageSize=2
 	@GetMapping
-	public List<PostDto> getAllPosts(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+	public PostResponse getAllPosts(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
 
 		return postService.getAllPosts(pageNo, pageSize);
