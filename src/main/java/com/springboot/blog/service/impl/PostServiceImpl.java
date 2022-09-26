@@ -33,6 +33,9 @@ public class PostServiceImpl implements PostService {
 		// saving... post
 		Post newPost = postRepository.save(post);
 		// convert entity to DTO
+		// If you need to add new logic to newPost that could of type BO(business
+		// object)
+		// payload could be divide to request & response
 		PostDto postResponse = mapToDto(newPost);
 		return postResponse;
 	}
@@ -113,5 +116,5 @@ public class PostServiceImpl implements PostService {
 
 }
 
-//note: spring v4.3 onwards whenever we configure our class as spring been and that 
+//note: spring-boot v4.3 onwards whenever we configure our class as spring been and that 
 //class has only one constructor then we can omit @Autowire annotation

@@ -19,6 +19,7 @@ import com.springboot.blog.utils.AppConstants;
 
 @RestController
 @RequestMapping("/api/posts")
+// we can double map the controller need to add the snipet
 public class PostController {
 
 	private PostService postService;
